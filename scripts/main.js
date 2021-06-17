@@ -53,11 +53,7 @@ const app = new Vue({
     addFavorite (id) {
       this.movies.forEach(movie => {
         if (movie.id === id) {
-          if (movie.favorite) {
-            movie.favorite = false
-          } else {
-            movie.favorite = true
-          }
+          movie.favorite = !movie.favorite
         }
       })
     },
