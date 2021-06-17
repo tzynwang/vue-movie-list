@@ -1,0 +1,75 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 99;
+}
+
+.container {
+  margin-top: calc(40px + 16px + 16px + 16px);
+}
+
+.col {
+  height: 30vh;
+}
+
+.card {
+  height: 100%;
+  width: 100%;
+  background-position: center center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  transition: 0.2s;
+  opacity: 0.6;
+  border-radius: 0.5rem;
+}
+
+.col:hover .card {
+  opacity: 1;
+  background-size: 120%;
+}
+
+.hide-input {
+  position: fixed;
+  top: -100px;
+  left: -100px;
+}
+
+.movie-card-body {
+  position: relative;
+}
+
+.movie-card-body span {
+  position: absolute;
+  top: .5rem;
+  right: 1rem;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.movie-card-body label {
+  cursor: pointer;
+}
+
+.movie-detail-modal-body {
+  height: 60vh;
+  background-size: contain;
+  background-repeat: no-repeat;
+  transition: 0.2s;
+  position: relative;
+}
+
+.movie-description {
+  position: absolute;
+  text-align: right;
+  bottom: 5%;
+  right: 0;
+  width: 80%;
+  background-color: rgba(55, 90, 127, 0.6);
+  padding: 1rem;
+  transition: 0.2s;
+}
+
+.movie-description:hover {
+  opacity: 0;
+}
