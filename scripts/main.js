@@ -67,7 +67,10 @@ const app = new Vue({
     },
     updateAppState (state) {
       if (state === 'search' && !this.userInput) return
-      if (this.currentState !== state) this.currentState = state
+      if (this.currentState !== state) {
+        this.currentState = state
+        this.currentPage = 1
+      }
     },
     leaveSearch () {
       document.querySelector('#userInput').value = ''
