@@ -35,10 +35,14 @@ const app = new Vue({
     }
   },
   async created () {
-    if (!storage.retrieve(STORAGE_KEY)) {
-      this.movies = await storage.initial(STORAGE_KEY)
-    } else {
-      this.movies = storage.retrieve(STORAGE_KEY)
+    try {
+      if (!storage.retrieve(STORAGE_KEY)) {
+        this.movies = await storage.initial(STORAGE_KEY)
+      } else {
+        this.movies = storage.retrieve(STORAGE_KEY)
+      }
+    } catch (error) {
+      console.error(error)
     }
   },
   methods: {
@@ -47,8 +51,7 @@ const app = new Vue({
       window.scrollTo(0, 0)
     },
     getMovieDetail (id) {
-      const movie = this.movies.filter(movie => movie.id === id)
-      this.movieModal = movie[0]
+      this.movieModal = this.movies.find(movie => movie.id === id)
     },
     addFavorite (id) {
       this.movies.forEach(movie => {
@@ -57,19 +60,14 @@ const app = new Vue({
         }
       })
     },
-    getRawInput () {
-      const rawInput = document.querySelector('#userInput').value.trim()
-      if (rawInput) this.userInput = rawInput
-    },
     updateAppState (state) {
-      if (state === 'search' && !this.userInput) return
+      if (state === 'search' && !this.userInput.length) return
       if (this.currentState !== state) {
         this.currentState = state
         this.currentPage = 1
       }
     },
     leaveSearch () {
-      document.querySelector('#userInput').value = ''
       this.userInput = ''
       this.currentState = 'home'
     }
