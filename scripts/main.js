@@ -12,6 +12,7 @@ const app = new Vue({
     moviePerPage: 12,
     movieModal: {},
     userInput: '',
+    searchInput: '',
     genresMap: {
       1: 'Action',
       2: 'Adventure',
@@ -62,6 +63,9 @@ const app = new Vue({
     },
     updateAppState (state) {
       if (state === 'search' && !this.userInput.length) return
+      // update searchInput after keyup.enter
+      this.searchInput = this.userInput
+      // reset currentPage if state change
       if (this.currentState !== state) {
         this.currentState = state
         this.currentPage = 1
@@ -69,24 +73,25 @@ const app = new Vue({
     },
     leaveSearch () {
       this.userInput = ''
+      this.searchInput = ''
       this.currentState = 'home'
     }
   },
   computed: {
     paginationArray () {
-      const filterResult = filters[this.currentState](this.movies, this.userInput)
+      const filterResult = filters[this.currentState](this.movies, this.searchInput)
       const maxPage = Math.ceil(filterResult.length / this.moviePerPage)
       return Array.from(Array(maxPage).keys(), pageNumber => ((pageNumber + 1)))
     },
     moviesByPage () {
-      const filterResult = filters[this.currentState](this.movies, this.userInput)
+      const filterResult = filters[this.currentState](this.movies, this.searchInput)
       return filterResult.slice(((this.currentPage - 1) * this.moviePerPage), (this.currentPage * this.moviePerPage))
     },
     noMatchResult () {
       return this.moviesByPage.length === 0
     },
     searchResultQty () {
-      const filterResult = filters[this.currentState](this.movies, this.userInput)
+      const filterResult = filters[this.currentState](this.movies, this.searchInput)
       return filterResult.length
     },
     noResultMessage () {

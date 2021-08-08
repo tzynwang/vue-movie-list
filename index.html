@@ -44,12 +44,13 @@
           Clear Result
         </button>
         <button class="btn btn-primary" type="button"
-        @click="updateAppState('search')">
+        @click="updateAppState('search')"
+        @keyup.esc="leaveSearch">
           Search
         </button>
       </div>
       <p class="mt-3" v-show="currentState === 'search'">
-        The search results of '{{ userInput }}' ({{ searchResultQty }}):
+        The search results of '{{ searchInput }}' ({{ searchResultQty }}):
       </p>
       <p class="mt-3" v-show="noMatchResult">
         {{ noResultMessage }}
