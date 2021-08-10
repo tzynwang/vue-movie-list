@@ -14,20 +14,19 @@ import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: 'home',
-  data() {
-    return {
-      randomMovie: ''
-    }
-  },
   methods: {
     ...mapActions(["getMovies", "paginationArray", "moviesByPage"]),
-    ...mapGetters(["getRandomMovie"])
+    ...mapGetters(["getRandomMovie"]),
   },
   created() {
     this.getMovies();
     this.moviesByPage();
     this.paginationArray();
-    this.randomMovie = this.getRandomMovie()
+  },
+  computed: {
+    randomMovie () {
+      return this.getRandomMovie()
+    }
   }
 }
 </script>
