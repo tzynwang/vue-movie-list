@@ -1,12 +1,15 @@
 <template>
   <div>
     <h1>Favirote movies</h1>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3 mt-3">
+    <div v-if="getMoviesByPage.length" class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3 mt-3">
       <movieCard
         v-for="movie in getMoviesByPage"
         :key="movie.id"
         :movie-data-from-parent="movie"
       />
+    </div>
+    <div v-else>
+      Have no favorited movie(s) yet.
     </div>
     <movieModal :movie-modal-data-from-parent="getMovieModal" />
     <pagination
