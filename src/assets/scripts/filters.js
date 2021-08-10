@@ -1,5 +1,5 @@
 export const filters = {
-  home (array) {
+  all (array) {
     return array
   },
   favorite (array) {

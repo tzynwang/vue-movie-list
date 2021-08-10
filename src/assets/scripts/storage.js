@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { INDEX_URL, POSTER_URL } from './config.js'
 
 export const storage = {
