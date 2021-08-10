@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import home from '../views/home.vue'
+import movies from '../views/movies.vue'
 
 Vue.use(VueRouter)
 
@@ -12,12 +13,12 @@ const routes = [
   },
   {
     path: '/movies',
-    name: 'All movies',
-    component: () => import('../views/movies.vue')
+    name: 'all',
+    component: movies
   },
   {
     path: '/favorite',
-    name: 'Favorite',
+    name: 'favorite',
     component: () => import('../views/favorites.vue')
   },
   {
