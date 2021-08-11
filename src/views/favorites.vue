@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <main class="container">
     <h1>Favirote movies</h1>
     <div v-if="getMoviesByPage.length" class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3 mt-3">
       <movieCard
@@ -9,13 +9,13 @@
       />
     </div>
     <div v-else>
-      Have no favorited movie(s) yet.
+      Have no favorite movie(s) yet.
     </div>
     <movieModal :movie-modal-data-from-parent="getMovieModal" />
     <pagination
     :current-page-from-parent="getCurrentPage"
     :pagination-array-from-parent="getPaginationArray" />
-  </div>
+  </main>
 </template>
 
 <script>
@@ -32,18 +32,18 @@ export default {
     movieModal,
     pagination
   },
+  created() {
+    this.updateCurrentState('favorite')
+    this.actionGetAllMovies();
+    this.moviesByPage();
+    this.paginationArray();
+  },
   methods: {
-    ...mapActions(["getMovies", "paginationArray", "moviesByPage", "updateCurrentState"]),
+    ...mapActions(["actionGetAllMovies", "paginationArray", "moviesByPage", "updateCurrentState"]),
     updateCurrentPage(page) {
       this.updateCurrentState(page);
     },
   },
   computed: mapGetters(["getMoviesByPage", "getCurrentPage", "getMovieModal", "getPaginationArray"]),
-  created() {
-    this.updateCurrentState('favorite')
-    this.getMovies();
-    this.moviesByPage();
-    this.paginationArray();
-  },
 }
 </script>

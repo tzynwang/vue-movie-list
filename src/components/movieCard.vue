@@ -31,7 +31,7 @@
           </label>
           <i
             class="bi bi-three-dots-vertical"
-            @click="getMovieDetail(movie.id)"
+            @click="getSingleMovieData(movie.id)"
             data-bs-toggle="modal"
             data-bs-target="#movieModal"
           ></i>
@@ -58,12 +58,12 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["updateFavorite", "fetchSingleMovieData"]),
+    ...mapActions(["updateFavorite", "actionGetSingleMovieData"]),
     addFavorite(movieId) {
       this.updateFavorite(movieId);
     },
-    getMovieDetail(movieId) {
-      this.fetchSingleMovieData(movieId);
+    getSingleMovieData(movieId) {
+      this.actionGetSingleMovieData(movieId);
     },
   },
 };
