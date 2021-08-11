@@ -11,6 +11,7 @@ const state = {
   moviePerPage: 12,
   movieModal: {},
   userInput: '',
+  filterResultLength: -1,
   genresMap: {
     1: 'Action',
     2: 'Adventure',
@@ -41,15 +42,14 @@ const getters = {
   getGenresMap: state => state.genresMap,
   getCurrentPage: state => state.currentPage,
   getPaginationArray: state => state.paginationArray,
-  getRandomMovie: state => {
-    return state.movies[Math.floor(Math.random() * state.movies.length)]
-  },
   getCurrentState: state => state.currentState,
-  getUserInput: state => state.userInput
+  getUserInput: state => state.userInput,
+  getFilterResultLength: state => state.filterResultLength,
+  getRandomMovie: state => state.movies[Math.floor(Math.random() * state.movies.length)]
 }
 
 const actions = {
-  async getMovies ({ commit }) {
+  async actionGetAllMovies ({ commit }) {
     let response
     try {
       if (!storage.retrieve(STORAGE_KEY) || !storage.retrieve(STORAGE_KEY).length) {
@@ -60,10 +60,11 @@ const actions = {
     } catch (error) {
       console.error(error)
     }
-    commit('setMovies', response)
+    commit('updateAllMovies', response)
   },
   moviesByPage ({ commit }) {
     const filterResult = filters[state.currentState](state.movies, state.userInput)
+    commit('updateFilterResultLength', filterResult.length)
     const resultByPage = filterResult.slice(((state.currentPage - 1) * state.moviePerPage), (state.currentPage * state.moviePerPage))
     commit('moviesByPage', resultByPage)
   },
@@ -79,8 +80,8 @@ const actions = {
   updateFavorite ({ commit }, id) {
     commit('updateFavorite', id)
   },
-  fetchSingleMovieData ({ commit }, id) {
-    commit('fetchSingleMovieData', id)
+  actionGetSingleMovieData ({ commit }, id) {
+    commit('updateMovieModalData', id)
   },
   updateCurrentState ({ commit }, page) {
     commit('updateCurrentState', page)
@@ -93,7 +94,7 @@ const actions = {
 }
 
 const mutations = {
-  setMovies: (state, response) => (state.movies = response),
+  updateAllMovies: (state, response) => (state.movies = response),
   moviesByPage: (state, filterResult) => (state.moviesByPage = filterResult),
   paginationArray: (state, paginationArray) => (state.paginationArray = paginationArray),
   updateCurrentPage: (state, page) => (state.currentPage = page.page),
@@ -104,11 +105,12 @@ const mutations = {
       }
     })
   },
-  fetchSingleMovieData: (state, id) => {
+  updateMovieModalData: (state, id) => {
     state.movieModal = state.movies.find(movie => movie.id === id)
   },
   updateCurrentState: (state, page) => (state.currentState = page),
-  updateUserInput: (state, userInput) => (state.userInput = userInput)
+  updateUserInput: (state, userInput) => (state.userInput = userInput),
+  updateFilterResultLength: (state, filterResultLength) => (state.filterResultLength = filterResultLength)
 }
 
 export default {
